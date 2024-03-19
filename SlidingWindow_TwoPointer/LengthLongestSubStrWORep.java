@@ -1,6 +1,8 @@
 package SlidingWindow_TwoPointer;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class LengthLongestSubStrWORep {
@@ -8,6 +10,26 @@ public class LengthLongestSubStrWORep {
         String str="abcabcbb";
         int result = bruteforceApproach(str);
         System.out.println(result);
+        int result1=optimizedApproach(str);
+        System.out.println(result1);
+    }
+
+    // TC:O(N)  SC:O(N)
+    private static int optimizedApproach(String str) {
+        Map<Character, Integer> mpp= new HashMap<>();
+        int left=0;
+        int right=0;
+        int n= str.length();
+        int len=0;
+        while(right<n){
+            if(mpp.containsKey(str.charAt(right)))
+            left=Math.max(mpp.get(str.charAt(right))+1, left);
+
+            mpp.put(str.charAt(right),right);
+            len=Math.max(len, right-left+1);
+            right++;
+        }
+        return len;
     }
 
     // TC: O(N^2)  SC: O(N)
